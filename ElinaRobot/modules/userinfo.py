@@ -1,38 +1,37 @@
 import html
-import re
 import os
+import re
+
 import requests
-
-from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.types import ChannelParticipantsAdmins
-from telethon import events
-
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update
+from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler
 from telegram.ext.dispatcher import run_async
-from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown, mention_html
+from telethon import events
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.types import ChannelParticipantsAdmins
 
+import ElinaRobot.modules.sql.userinfo_sql as sql
 from ElinaRobot import (
-    DEV_USERS,
-    OWNER_ID,
-    DRAGONS,
     DEMONS,
+    DEV_USERS,
+    DRAGONS,
+    INFOPIC,
+    OWNER_ID,
     TIGERS,
     WOLVES,
-    INFOPIC,
     dispatcher,
     sw,
 )
+from ElinaRobot import telethn as YoneTelethonClient
 from ElinaRobot.__main__ import STATS, TOKEN, USER_INFO
-import ElinaRobot.modules.sql.userinfo_sql as sql
 from ElinaRobot.modules.disable import DisableAbleCommandHandler
-from ElinaRobot.modules.sql.global_bans_sql import is_user_gbanned
-from ElinaRobot.modules.sql.afk_sql import is_afk, check_afk_status
-from ElinaRobot.modules.sql.users_sql import get_user_num_chats
 from ElinaRobot.modules.helper_funcs.chat_status import sudo_plus
 from ElinaRobot.modules.helper_funcs.extraction import extract_user
-from ElinaRobot import telethn as YoneTelethonClient, TIGERS, DRAGONS, DEMONS
+from ElinaRobot.modules.sql.afk_sql import check_afk_status, is_afk
+from ElinaRobot.modules.sql.global_bans_sql import is_user_gbanned
+from ElinaRobot.modules.sql.users_sql import get_user_num_chats
 
 
 def no_by_per(totalhp, percentage):

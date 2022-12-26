@@ -2,10 +2,11 @@ import datetime
 from typing import List
 
 import requests
-from ElinaRobot import TIME_API_KEY, dispatcher
-from ElinaRobot.modules.disable import DisableAbleCommandHandler
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext, run_async
+
+from ElinaRobot import TIME_API_KEY, dispatcher
+from ElinaRobot.modules.disable import DisableAbleCommandHandler
 
 
 def generate_time(to_find: str, findtype: List[str]) -> str:

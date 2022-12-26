@@ -1,9 +1,11 @@
 import os
+
 import aiofiles
 import aiohttp
-from random import randint
 from pyrogram import filters
+
 from ElinaRobot import pbot as Elina
+
 
 async def fetch(url):
     async with aiohttp.ClientSession() as session:
@@ -13,6 +15,7 @@ async def fetch(url):
             except:
                 data = await resp.text()
     return data
+
 
 async def ai_elina(url):
     ai_name = "elina.mp3"
@@ -31,10 +34,12 @@ async def Lycia(_, message):
         await message.reply_text("Elina AI Voice Chatbot")
         return
     text = message.text.split(None, 1)[1]
-    Elina = text.replace(" ", "%20")
+    text.replace(" ", "%20")
     m = await message.reply_text("Elina Is Best...")
     try:
-        L = await fetch(f"https://api.affiliateplus.xyz/api/chatbot?message={lycia}&botname=amelia&ownername=Abhishek&user=1")
+        L = await fetch(
+            f"https://api.affiliateplus.xyz/api/chatbot?message={lycia}&botname=amelia&ownername=Abhishek&user=1"
+        )
         chatbot = L["message"]
         VoiceAi = f"https://lyciavoice.herokuapp.com/lycia?text={chatbot}&lang=hi"
         name = "elina"

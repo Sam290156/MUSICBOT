@@ -4,9 +4,9 @@ import dateparser
 from telethon import *
 from telethon.tl.types import ChatBannedRights
 
+from ElinaRobot import telethn as tbot
 from ElinaRobot.events import register
 from ElinaRobot.mongo import db
-from ElinaRobot import telethn as tbot
 
 nightmod = db.nightmode
 
@@ -292,5 +292,3 @@ async def _(event):
             continue
     except Exception as e:
         print(e)
-
-

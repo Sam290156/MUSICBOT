@@ -13,7 +13,7 @@ def get_user_list(config, key):
 class Config(object):
     LOGGER = True
     # =================================𝚁𝙴𝚀𝚄𝙸𝚁𝙴𝙳==================================
-    
+
     API_ID = 123456  # integer value, dont use ""
     API_HASH = "awoo"
     TOKEN = "BOT_TOKEN"  # This var used to be API_KEY but it is now TOKEN, adjust accordingly.
@@ -67,6 +67,7 @@ class Config(object):
     AI_API_KEY = "awoo"  # For chatbot, get one from https://coffeehouse.intellivoid.net/dashboard
     BL_CHATS = []  # List of groups that you want blacklisted.
     SPAMMERS = None
+
 
 class Production(Config):
     LOGGER = True

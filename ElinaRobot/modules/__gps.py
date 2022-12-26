@@ -1,10 +1,10 @@
-import os
-from ElinaRobot import telethn as tbot
 from geopy.geocoders import Nominatim
-from ElinaRobot.events import register
-from ElinaRobot import *
 from telethon import *
 from telethon.tl import *
+
+from ElinaRobot import *
+from ElinaRobot import telethn as tbot
+from ElinaRobot.events import register
 
 GMAPS_LOC = "https://maps.googleapis.com/maps/api/geocode/json"
 
@@ -33,4 +33,3 @@ async def _(event):
     except Exception as e:
         print(e)
         await event.reply("I can't find that")
-

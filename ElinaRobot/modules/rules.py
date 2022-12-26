@@ -1,20 +1,12 @@
-from typing import Optional
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
+from telegram.utils.helpers import escape_markdown
 
 import ElinaRobot.modules.sql.rules_sql as sql
 from ElinaRobot import dispatcher
 from ElinaRobot.modules.helper_funcs.chat_status import user_admin
 from ElinaRobot.modules.helper_funcs.string_handling import markdown_parser
-from telegram import (
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Message,
-    ParseMode,
-    Update,
-    User,
-)
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, Filters, run_async
-from telegram.utils.helpers import escape_markdown
 
 
 @run_async

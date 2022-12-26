@@ -1,33 +1,8 @@
 import importlib
-import time
 import re
+import time
 from sys import argv
-from typing import Optional
 
-from ElinaRobot import (
-    ALLOW_EXCL,
-    CERT_PATH,
-    DONATION_LINK,
-    LOGGER,
-    OWNER_ID,
-    PORT,
-    SUPPORT_CHAT,
-    TOKEN,
-    URL,
-    WEBHOOK,
-    SUPPORT_CHAT,
-    dispatcher,
-    StartTime,
-    telethn,
-    pbot,
-    updater,
-)
-
-# needed to dynamically load modules
-# NOTE: Module order is not guaranteed, specify that in the config file!
-from ElinaRobot.modules import ALL_MODULES
-from ElinaRobot.modules.helper_funcs.chat_status import is_user_admin
-from ElinaRobot.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -46,6 +21,29 @@ from telegram.ext import (
 )
 from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
 from telegram.utils.helpers import escape_markdown
+
+from ElinaRobot import (
+    CERT_PATH,
+    DONATION_LINK,
+    LOGGER,
+    OWNER_ID,
+    PORT,
+    SUPPORT_CHAT,
+    TOKEN,
+    URL,
+    WEBHOOK,
+    StartTime,
+    dispatcher,
+    pbot,
+    telethn,
+    updater,
+)
+
+# needed to dynamically load modules
+# NOTE: Module order is not guaranteed, specify that in the config file!
+from ElinaRobot.modules import ALL_MODULES
+from ElinaRobot.modules.helper_funcs.chat_status import is_user_admin
+from ElinaRobot.modules.helper_funcs.misc import paginate_modules
 
 
 def get_readable_time(seconds: int) -> str:
@@ -83,17 +81,17 @@ PM_START_TEXT = """
 buttons = [
     [
         InlineKeyboardButton(
-            text="➕️ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕️", url="t.me/Elina_Robot?startgroup=true"),
+            text="➕️ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ➕️", url="t.me/Elina_Robot?startgroup=true"
+        ),
     ],
     [
         InlineKeyboardButton(text="🚦 ᴀʙᴏᴜᴛ", callback_data="elina_"),
         InlineKeyboardButton(text="📄 ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅꜱ", callback_data="help_back"),
     ],
     [
-        
         InlineKeyboardButton(text="♨️ ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/Eline_Support"),
         InlineKeyboardButton(text="❄️ ᴜᴘᴅᴀᴛᴇs", url=f"https://t.me/Eline_Update"),
-   ],
+    ],
 ]
 
 
@@ -136,7 +134,9 @@ for module_name in ALL_MODULES:
     if imported_module.__mod_name__.lower() not in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
-        raise Exception("» ᴄᴀɴ'ᴛ ʜᴀᴠᴇ ᴛᴡᴏ ᴍᴏᴅᴜʟᴇs ᴡɪᴛʜ ᴛʜᴇ sᴀᴍᴇ ɴᴀᴍᴇ! ᴘʟᴇᴀsᴇ ᴄʜᴀɴɢᴇ ᴏɴᴇ.")
+        raise Exception(
+            "» ᴄᴀɴ'ᴛ ʜᴀᴠᴇ ᴛᴡᴏ ᴍᴏᴅᴜʟᴇs ᴡɪᴛʜ ᴛʜᴇ sᴀᴍᴇ ɴᴀᴍᴇ! ᴘʟᴇᴀsᴇ ᴄʜᴀɴɢᴇ ᴏɴᴇ."
+        )
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
         HELPABLE[imported_module.__mod_name__.lower()] = imported_module
@@ -392,20 +392,16 @@ def elina_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="◁", callback_data="elina_back")
-                 ]
-                ]
+                [[InlineKeyboardButton(text="◁", callback_data="elina_back")]]
             ),
         )
     elif query.data == "elina_back":
         query.message.edit_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
 
 
@@ -421,21 +417,18 @@ def github_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="◁", callback_data="github_back")
-                 ]
-                ]
+                [[InlineKeyboardButton(text="◁", callback_data="github_back")]]
             ),
         )
     elif query.data == "github_back":
         query.message.edit_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
+
 
 @run_async
 def get_help(update: Update, context: CallbackContext):
@@ -720,7 +713,9 @@ def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "𝑬𝒍𝒊𝒏𝒆 ʀᴏʙᴏᴛ ɪs ᴀʟɪᴠᴇ 😂\n\nᴍᴀᴅᴇ ᴡɪᴛʜ ʙʏ  𝗟𝗼𝗻𝗲 𝗪𝗼𝗹𝗳")
+            dispatcher.bot.sendMessage(
+                f"@{SUPPORT_CHAT}", "𝑬𝒍𝒊𝒏𝒆 ʀᴏʙᴏᴛ ɪs ᴀʟɪᴠᴇ 😂\n\nᴍᴀᴅᴇ ᴡɪᴛʜ ʙʏ  𝗟𝗼𝗻𝗲 𝗪𝗼𝗹𝗳"
+            )
         except Unauthorized:
             LOGGER.warning(
                 "» ʙᴏᴛ ɪs ɴᴏᴛ ᴀʙʟᴇ ᴛᴏ sᴇɴᴅ ᴍᴇssᴀɢᴇ ᴛᴏ sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ, ɢᴏ ᴀɴᴅ ᴄʜᴇᴄᴋ!"
@@ -728,7 +723,7 @@ def main():
         except BadRequest as e:
             LOGGER.warning(e.message)
 
-    test_handler = CommandHandler("test", test)
+    CommandHandler("test", test)
     start_handler = CommandHandler("start", start)
 
     help_handler = CommandHandler("help", get_help)
@@ -737,8 +732,12 @@ def main():
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(elina_about_callback, pattern=r"elina_")
-    source_callback_handler = CallbackQueryHandler(youtube_about_callback, pattern=r"youtube_")
+    about_callback_handler = CallbackQueryHandler(
+        elina_about_callback, pattern=r"elina_"
+    )
+    source_callback_handler = CallbackQueryHandler(
+        youtube_about_callback, pattern=r"youtube_"
+    )
 
     donate_handler = CommandHandler("donate", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)

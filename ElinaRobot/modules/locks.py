@@ -1,28 +1,26 @@
 import html
 
-from telegram import Message, Chat, ParseMode, MessageEntity
-from telegram import TelegramError, ChatPermissions
+from alphabet_detector import AlphabetDetector
+from telegram import ChatPermissions, MessageEntity, ParseMode, TelegramError
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
-from alphabet_detector import AlphabetDetector
-
 import ElinaRobot.modules.sql.locks_sql as sql
-from ElinaRobot import dispatcher, DRAGONS, LOGGER
+from ElinaRobot import DRAGONS, LOGGER, dispatcher
+from ElinaRobot.modules.connection import connected
 from ElinaRobot.modules.disable import DisableAbleCommandHandler
+from ElinaRobot.modules.helper_funcs.alternate import send_message, typing_action
 from ElinaRobot.modules.helper_funcs.chat_status import (
     can_delete,
-    is_user_admin,
-    user_not_admin,
     is_bot_admin,
+    is_user_admin,
     user_admin,
+    user_not_admin,
 )
 from ElinaRobot.modules.log_channel import loggable
-from ElinaRobot.modules.connection import connected
 from ElinaRobot.modules.sql.approve_sql import is_approved
-from ElinaRobot.modules.helper_funcs.alternate import send_message, typing_action
 
 ad = AlphabetDetector()
 
@@ -367,7 +365,7 @@ def del_lockables(update, context):
         if lockable == "rtl":
             if sql.is_locked(chat.id, lockable) and can_delete(chat, context.bot.id):
                 if message.caption:
-                    check = ad.detect_alphabet(u"{}".format(message.caption))
+                    check = ad.detect_alphabet("{}".format(message.caption))
                     if "ARABIC" in check:
                         try:
                             message.delete()
@@ -378,7 +376,7 @@ def del_lockables(update, context):
                                 LOGGER.exception("ERROR in lockables")
                         break
                 if message.text:
-                    check = ad.detect_alphabet(u"{}".format(message.text))
+                    check = ad.detect_alphabet("{}".format(message.text))
                     if "ARABIC" in check:
                         try:
                             message.delete()

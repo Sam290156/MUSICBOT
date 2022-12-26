@@ -4,7 +4,6 @@ import os
 import time
 
 import lyricsgenius
-import requests
 import wget
 from pyrogram import filters
 from pyrogram.types import Message
@@ -12,9 +11,9 @@ from tswift import Song
 from youtube_dl import YoutubeDL
 from youtubesearchpython import SearchVideos
 
+from ElinaRobot import pbot
 from ElinaRobot.conf import get_str_key
 from ElinaRobot.pyrogramee.pluginshelper import get_text, progress
-from ElinaRobot import pbot
 
 GENIUS = get_str_key("GENIUS_API_TOKEN", None)
 
@@ -156,9 +155,10 @@ async def ytmusic(client, message: Message):
         if files and os.path.exists(files):
             os.remove(files)
 
+
 def time_to_seconds(time):
     stringt = str(time)
-    return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":"))))
+    return sum(int(x) * 60**i for i, x in enumerate(reversed(stringt.split(":"))))
 
 
 # Lel, Didn't Get Time To Make New One So Used Plugin Made br @mrconfused and @sandy1709 dont edit credits
@@ -253,4 +253,3 @@ async def lyrics(client, message):
             f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```"
         )
     return
-

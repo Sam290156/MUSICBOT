@@ -1,4 +1,9 @@
-import random, html
+import html
+import random
+
+from telegram import MessageEntity, Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext, Filters, MessageHandler, run_async
 
 from ElinaRobot import dispatcher
 from ElinaRobot.modules.disable import (
@@ -7,9 +12,6 @@ from ElinaRobot.modules.disable import (
 )
 from ElinaRobot.modules.sql import afk_sql as sql
 from ElinaRobot.modules.users import get_user_id
-from telegram import MessageEntity, Update
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext, Filters, MessageHandler, run_async
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8
@@ -136,7 +138,6 @@ def check_afk(update, context, user_id, fst_name, userc_id):
                 html.escape(fst_name), html.escape(user.reason)
             )
             update.effective_message.reply_text(res, parse_mode="html")
-
 
 
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)

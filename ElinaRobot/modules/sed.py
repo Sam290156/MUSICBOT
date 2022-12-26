@@ -2,11 +2,12 @@ import sre_constants
 
 import regex
 import telegram
+from telegram import Update
+from telegram.ext import CallbackContext, Filters, run_async
+
 from ElinaRobot import LOGGER, dispatcher
 from ElinaRobot.modules.disable import DisableAbleMessageHandler
 from ElinaRobot.modules.helper_funcs.regex_helper import infinite_loop_check
-from telegram import Update
-from telegram.ext import CallbackContext, Filters, run_async
 
 DELIMITERS = ("/", ":", "|", "_")
 
@@ -121,7 +122,6 @@ def sed(update: Update, context: CallbackContext):
             )
         elif text:
             update.effective_message.reply_to_message.reply_text(text)
-
 
 
 __mod_name__ = "sᴇᴅ-ʀᴇɢᴇx"

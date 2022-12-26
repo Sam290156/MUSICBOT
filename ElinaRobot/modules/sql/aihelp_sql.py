@@ -1,7 +1,8 @@
 import threading
 
-from ElinaRobot.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String
+
+from ElinaRobot.modules.sql import BASE, SESSION
 
 
 class aiChats(BASE):

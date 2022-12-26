@@ -2,12 +2,14 @@ import logging
 import os
 import sys
 import time
-import spamwatch
 
+import spamwatch
 import telegram.ext as tg
 from pyrogram import Client, errors
 from telethon import TelegramClient
-from ElinaRobot.utils.logger import log 
+
+from ElinaRobot.utils.logger import log
+
 StartTime = time.time()
 
 # enable logging
@@ -43,7 +45,9 @@ if ENV:
         DRAGONS = set(int(x) for x in os.environ.get("DRAGONS", "").split())
         DEV_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
     except ValueError:
-        raise Exception("» ʏᴏᴜʀ sᴜᴅᴏ ᴏʀ ᴅᴇᴠ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs.")
+        raise Exception(
+            "» ʏᴏᴜʀ sᴜᴅᴏ ᴏʀ ᴅᴇᴠ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs."
+        )
 
     try:
         DEMONS = set(int(x) for x in os.environ.get("DEMONS", "").split())
@@ -53,7 +57,9 @@ if ENV:
     try:
         WOLVES = set(int(x) for x in os.environ.get("WOLVES", "").split())
     except ValueError:
-        raise Exception("» ʏᴏᴜʀ ᴡʜɪᴛᴇʟɪsᴛᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs.")
+        raise Exception(
+            "» ʏᴏᴜʀ ᴡʜɪᴛᴇʟɪsᴛᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs."
+        )
 
     try:
         TIGERS = set(int(x) for x in os.environ.get("TIGERS", "").split())
@@ -116,7 +122,9 @@ else:
         DRAGONS = set(int(x) for x in Config.DRAGONS or [])
         DEV_USERS = set(int(x) for x in Config.DEV_USERS or [])
     except ValueError:
-        raise Exception("» ʏᴏᴜʀ sᴜᴅᴏ ᴏʀ ᴅᴇᴠ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs.")
+        raise Exception(
+            "» ʏᴏᴜʀ sᴜᴅᴏ ᴏʀ ᴅᴇᴠ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs."
+        )
 
     try:
         DEMONS = set(int(x) for x in Config.DEMONS or [])
@@ -126,7 +134,9 @@ else:
     try:
         WOLVES = set(int(x) for x in Config.WOLVES or [])
     except ValueError:
-        raise Exception("» ʏᴏᴜʀ ᴡʜɪᴛᴇʟɪsᴛᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs.")
+        raise Exception(
+            "» ʏᴏᴜʀ ᴡʜɪᴛᴇʟɪsᴛᴇᴅ ᴜsᴇʀs ʟɪsᴛ ᴅᴏᴇs ɴᴏᴛ ᴄᴏɴᴛᴀɪɴ ᴠᴀʟɪᴅ ɪɴᴛᴇɢᴇʀs."
+        )
 
     try:
         TIGERS = set(int(x) for x in Config.TIGERS or [])
@@ -166,7 +176,7 @@ else:
     SPAMWATCH_API = Config.SPAMWATCH_API
     INFOPIC = Config.INFOPIC
     REDIS_URL = Config.REDIS_URL
-    
+
     try:
         BL_CHATS = set(int(x) for x in Config.BL_CHATS or [])
     except ValueError:

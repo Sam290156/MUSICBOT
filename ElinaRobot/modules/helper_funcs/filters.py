@@ -1,6 +1,7 @@
-from ElinaRobot import DEV_USERS, DRAGONS, DEMONS
 from telegram import Message
 from telegram.ext import BaseFilter
+
+from ElinaRobot import DEMONS, DEV_USERS, DRAGONS
 
 
 class CustomFilters(object):

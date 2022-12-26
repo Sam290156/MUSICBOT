@@ -1,9 +1,10 @@
 import random
 
-from ElinaRobot import dispatcher
-from ElinaRobot.modules.disable import DisableAbleCommandHandler
 from telegram import Update
 from telegram.ext import CallbackContext, run_async
+
+from ElinaRobot import dispatcher
+from ElinaRobot.modules.disable import DisableAbleCommandHandler
 
 reactions = [
     "( ͡° ͜ʖ ͡°)",

@@ -1,16 +1,13 @@
-from ElinaRobot import telethn as tbot
-from ElinaRobot.events import register
-import os
 import asyncio
 import os
-import time
-from datetime import datetime
+
 from ElinaRobot import OWNER_ID
-from ElinaRobot import TEMP_DOWNLOAD_DIRECTORY as path
-from ElinaRobot import TEMP_DOWNLOAD_DIRECTORY
-from datetime import datetime
-water = './ElinaRobot/resources/Elina.jpg'
+from ElinaRobot import telethn as tbot
+from ElinaRobot.events import register
+
+water = "./ElinaRobot/resources/Elina.jpg"
 client = tbot
+
 
 @register(pattern=r"^/send ?(.*)")
 async def Prof(event):
@@ -23,24 +20,25 @@ async def Prof(event):
     input_str = event.pattern_match.group(1)
     the_plugin_file = "./ElinaRobot/modules/{}.py".format(input_str)
     if os.path.exists(the_plugin_file):
-     message_id = event.message.id
-     await event.client.send_file(
-             event.chat_id,
-             the_plugin_file,
-             force_document=True,
-             allow_cache=False,
-             thumb=thumb,
-             reply_to=message_id,
-         )
+        message_id = event.message.id
+        await event.client.send_file(
+            event.chat_id,
+            the_plugin_file,
+            force_document=True,
+            allow_cache=False,
+            thumb=thumb,
+            reply_to=message_id,
+        )
     else:
         await event.reply("No File Found!")
 
 
-from ElinaRobot.events import load_module
 import asyncio
 import os
-from datetime import datetime
 from pathlib import Path
+
+from ElinaRobot.events import load_module
+
 
 @register(pattern="^/install")
 async def install(event):
@@ -62,13 +60,15 @@ async def install(event):
                 path1 = Path(downloaded_file_name)
                 shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
-                await event.reply("Installed.... 👍\n `{}`".format(
+                await event.reply(
+                    "Installed.... 👍\n `{}`".format(
                         os.path.basename(downloaded_file_name)
                     ),
                 )
             else:
                 os.remove(downloaded_file_name)
-                k = await event.reply("**Error!**\n⚠️Cannot Install! \n📂 File not supported \n Or Pre Installed Maybe..😁",
+                k = await event.reply(
+                    "**Error!**\n⚠️Cannot Install! \n📂 File not supported \n Or Pre Installed Maybe..😁",
                 )
                 await asyncio.sleep(2)
                 await k.delete()

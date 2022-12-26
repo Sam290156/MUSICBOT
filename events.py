@@ -1,23 +1,23 @@
-import inspect
 import glob
+import inspect
 import logging
-import sys
 import re
-
+import sys
 from pathlib import Path
-from telethon import events
 
 from pymongo import MongoClient
-from ElinaRobot import MONGO_DB_URI
-from ElinaRobot import telethn
+from telethon import events
+
+from ElinaRobot import MONGO_DB_URI, telethn
 
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["ElinaRobot"]
 gbanned = db.gban
 
+
 def register(**args):
-    """ 𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁 𝙰 𝙽𝙴𝚆 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂. """
+    """𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁 𝙰 𝙽𝙴𝚆 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂."""
     pattern = args.get("pattern", None)
 
     r_pattern = r"^[/!]"
@@ -35,7 +35,7 @@ def register(**args):
 
 
 def chataction(**args):
-    """ 𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙲𝙷𝙰𝚃 𝙰𝙲𝚃𝙸𝙾𝙽𝚂. """
+    """𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙲𝙷𝙰𝚃 𝙰𝙲𝚃𝙸𝙾𝙽𝚂."""
 
     def decorator(func):
         telethn.add_event_handler(func, events.ChatAction(**args))
@@ -45,7 +45,7 @@ def chataction(**args):
 
 
 def userupdate(**args):
-    """ 𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝚄𝚂𝙴𝚁 𝚄𝙿𝙳𝙰𝚃𝙴𝚂. """
+    """𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝚄𝚂𝙴𝚁 𝚄𝙿𝙳𝙰𝚃𝙴𝚂."""
 
     def decorator(func):
         telethn.add_event_handler(func, events.UserUpdate(**args))
@@ -55,7 +55,7 @@ def userupdate(**args):
 
 
 def inlinequery(**args):
-    """ 𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙸𝙽𝙻𝙸𝙽𝙴 𝚀𝚄𝙴𝚁𝚈. """
+    """𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙸𝙽𝙻𝙸𝙽𝙴 𝚀𝚄𝙴𝚁𝚈."""
     pattern = args.get("pattern", None)
 
     if pattern is not None and not pattern.startswith("(?i)"):
@@ -69,7 +69,7 @@ def inlinequery(**args):
 
 
 def callbackquery(**args):
-    """ 𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙸𝙽𝙻𝙸𝙽𝙴 𝚀𝚄𝙴𝚁𝚈. """
+    """𝚁𝙴𝙶𝙸𝚂𝚃𝙴𝚁𝚂 𝙸𝙽𝙻𝙸𝙽𝙴 𝚀𝚄𝙴𝚁𝚈."""
 
     def decorator(func):
         telethn.add_event_handler(func, events.CallbackQuery(**args))
@@ -119,12 +119,12 @@ def bot(**args):
                 print("» ɪ ᴅᴏɴ'ᴛ ᴡᴏʀᴋ ɪɴ ᴄʜᴀɴɴᴇʟ....")
                 return
             if check.is_group:
-               if check.chat.megagroup:
-                  pass
-               else:
-                  print("» ɪ ᴅᴏɴ'ᴛ ᴡᴏʀᴋ ɪɴ sᴍᴀʟʟ ᴄʜᴀᴛs...")
-                  return
-                          
+                if check.chat.megagroup:
+                    pass
+                else:
+                    print("» ɪ ᴅᴏɴ'ᴛ ᴡᴏʀᴋ ɪɴ sᴍᴀʟʟ ᴄʜᴀᴛs...")
+                    return
+
             users = gbanned.find({})
             for c in users:
                 if check.sender_id == c["user"]:
@@ -148,12 +148,12 @@ def bot(**args):
 
 def ElinaRobot(**args):
     pattern = args.get("pattern", None)
-    disable_edited = args.get("disable_edited", False)
+    args.get("disable_edited", False)
     ignore_unsafe = args.get("ignore_unsafe", False)
     unsafe_pattern = r"^[^/!#@\$A-Za-z]"
-    group_only = args.get("group_only", False)
-    disable_errors = args.get("disable_errors", False)
-    insecure = args.get("insecure", False)
+    args.get("group_only", False)
+    args.get("disable_errors", False)
+    args.get("insecure", False)
     if pattern is not None and not pattern.startswith("(?i)"):
         args["pattern"] = "(?i)" + pattern
 
@@ -182,6 +182,7 @@ def load_module(shortname):
         pass
     elif shortname.endswith("_"):
         import importlib
+
         import ElinaRobot.events
 
         path = Path(f"ElinaRobot/modules/{shortname}.py")
@@ -192,6 +193,7 @@ def load_module(shortname):
         print("Successfully imported " + shortname)
     else:
         import importlib
+
         import ElinaRobot.events
 
         path = Path(f"ElinaRobot/modules/{shortname}.py")

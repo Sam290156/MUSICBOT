@@ -1,13 +1,13 @@
 import os
 
-#Saavn
-
 import requests
 import wget
 from pyrogram import filters
 
 from ElinaRobot import pbot as Jebot
 from ElinaRobot.pyrogramee.dark import get_arg
+
+# Saavn
 
 
 @Jebot.on_message(filters.command("saavn"))
@@ -18,11 +18,11 @@ async def song(client, message):
     if args.startswith(" "):
         await message.reply("<b>Enter song name❗</b>")
         return ""
-    m = await message.reply_text(
-        "Downloading your song,\nPlz wait ⏳️"
-    )
+    m = await message.reply_text("Downloading your song,\nPlz wait ⏳️")
     try:
-        r = requests.get(f"https://jevcplayerbot-saavndl.herokuapp.com/result/?query={args}")
+        r = requests.get(
+            f"https://jevcplayerbot-saavndl.herokuapp.com/result/?query={args}"
+        )
     except Exception as e:
         await m.edit(str(e))
         return
@@ -36,16 +36,20 @@ async def song(client, message):
     os.remove(ffile)
     await m.delete()
 
-#Deezer
+
+# Deezer
 
 
 import os
+
 import aiofiles
 import aiohttp
 from pyrogram import filters
+
 from ElinaRobot import pbot as Elina
 
 ARQ = "https://thearq.tech/"
+
 
 async def fetch(url):
     async with aiohttp.ClientSession() as session:
@@ -55,6 +59,7 @@ async def fetch(url):
             except:
                 data = await resp.text()
     return data
+
 
 async def download_song(url):
     song_name = f"elina.mp3"
@@ -89,4 +94,3 @@ async def deezer(_, message):
     await message.reply_audio(audio=song, title=title, performer=artist)
     os.remove(song)
     await m.delete()
-

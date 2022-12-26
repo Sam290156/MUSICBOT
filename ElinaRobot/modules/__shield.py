@@ -8,24 +8,23 @@ import nude
 import requests
 from better_profanity import profanity
 from google_trans_new import google_translator
+from pymongo import MongoClient
 from telethon import events
 from telethon.tl.types import ChatBannedRights
 
-from ElinaRobot import BOT_ID
-from ElinaRobot.conf import get_int_key, get_str_key
-
-# from ElinaRobot.db.mongo_helpers.nsfw_guard import add_chat, get_all_nsfw_chats, is_chat_in_db, rm_chat
-from ElinaRobot.pyrogramee.telethonbasics import is_admin
+from ElinaRobot import BOT_ID, MONGO_DB_URI
+from ElinaRobot import telethn as tbot
+from ElinaRobot.conf import get_str_key
 from ElinaRobot.events import register
-from ElinaRobot import MONGO_DB_URI 
-from pymongo import MongoClient
 from ElinaRobot.modules.sql_extended.nsfw_watch_sql import (
     add_nsfwatch,
     get_all_nsfw_enabled_chat,
     is_nsfwatch_indb,
     rmnsfwatch,
 )
-from ElinaRobot import telethn as tbot
+
+# from ElinaRobot.db.mongo_helpers.nsfw_guard import add_chat, get_all_nsfw_chats, is_chat_in_db, rm_chat
+from ElinaRobot.pyrogramee.telethonbasics import is_admin
 
 translator = google_translator()
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
@@ -35,6 +34,7 @@ MONGO_DB_URI = get_str_key("MONGO_DB_URI")
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["ElinaRobot"]
+
 
 async def is_nsfw(event):
     lmao = event
@@ -412,6 +412,8 @@ async def del_profanity(event):
                     dev = await event.respond(final)
                     await asyncio.sleep(10)
                     await dev.delete()
+
+
 #
 
 __help__ = """

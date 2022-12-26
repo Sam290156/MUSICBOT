@@ -207,6 +207,8 @@ def get_lst_of_files(input_directory, output_lst):
             return get_lst_of_files(current_file_name, output_lst)
         output_lst.append(current_file_name)
     return output_lst
+
+
 __help__ = """
 Hey I can convert files here..
  ❍ /zip*:* reply to a telegram file to compress it in .zip format
